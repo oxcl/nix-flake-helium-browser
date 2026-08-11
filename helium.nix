@@ -6,6 +6,7 @@
 , makeWrapper
 , wrapGAppsHook3
 , makeFontsConf
+, symlinkJoin
 , qt6
 , glib
 , gsettings-desktop-schemas
@@ -35,6 +36,7 @@
 , libSM
 , libICE
 , alsa-lib
+, alsa-plugins
 , dbus
 , cups
 , ffmpeg
@@ -149,6 +151,14 @@ let
       noto-fonts-cjk-serif
     ];
   };
+
+  alsaPluginDirectory = symlinkJoin {
+    name = "helium-alsa-plugins";
+    paths = [
+      "${pipewire}/lib/alsa-lib"
+      "${alsa-plugins}/lib/alsa-lib"
+    ];
+  };
 in
 
 stdenv.mkDerivation {
@@ -244,6 +254,7 @@ stdenv.mkDerivation {
   preFixup = ''
     gappsWrapperArgs+=(
       --prefix LD_LIBRARY_PATH : "${libPath}"
+      --set ALSA_PLUGIN_DIR "${alsaPluginDirectory}"
       --prefix PATH : ${lib.makeBinPath [ xdg-utils coreutils ]}
       --add-flags "\''${NIXOS_OZONE_WL:+\''${WAYLAND_DISPLAY:+--ozone-platform-hint=auto}}"
       --set-default CHROME_VERSION_EXTRA nix
