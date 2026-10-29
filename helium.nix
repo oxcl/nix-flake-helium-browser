@@ -71,7 +71,7 @@
 
 let
   pname = "helium";
-  version = "0.20.1.1";
+  version = "0.20.2.1";
 
   suffix = {
     aarch64-linux = "arm64";
@@ -80,7 +80,7 @@ let
 
   src = fetchurl {
     url = "https://github.com/imputnet/helium-linux/releases/download/${version}/helium-bin_${version}-1_${suffix}.deb";
-    sha256 = "sha256-HLpZpTAxuGYhbYV4DJBo1x4xiiXhlgJ1LZ46ReGT+l4=";
+    sha256 = "sha256-kc7l3o7zXShojEqv42hAazd3kgUhEfjoy8i1QrCI588=";
   };
 
   inherit (lib) optional optionals makeLibraryPath makeSearchPathOutput makeBinPath;
