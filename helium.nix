@@ -4,6 +4,7 @@
 , dpkg
 , patchelf
 , makeWrapper
+, makeShellWrapper
 , wrapGAppsHook3
 , makeFontsConf
 , symlinkJoin
@@ -172,8 +173,7 @@ stdenv.mkDerivation {
   nativeBuildInputs = [
     patchelf
     makeWrapper
-    wrapGAppsHook3
-    qt6.wrapQtAppsHook
+    (wrapGAppsHook3.override { makeWrapper = makeShellWrapper; })
     dpkg
     binutils
   ];
