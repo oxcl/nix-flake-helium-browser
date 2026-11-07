@@ -78,9 +78,14 @@ let
     x86_64-linux = "amd64";
   }.${stdenv.hostPlatform.system} or (throw "Unsupported system: ${stdenv.hostPlatform.system}");
 
+  src-hash = {
+    aarch64-linux = "sha256-YTv/HS0yQBHiJTVioD9IYlDEmitcJKUQSIlVezGgcIM=";
+    x86_64-linux = "sha256-Z5qI6hfpaWU+CVBKHQG84VX049L/Nm0lcdbQC5hUV8w=";
+  }.${stdenv.hostPlatform.system} or (throw "Unsupported system: ${stdenv.hostPlatform.system}");
+
   src = fetchurl {
     url = "https://github.com/imputnet/helium-linux/releases/download/${version}/helium-bin_${version}-1_${suffix}.deb";
-    sha256 = "sha256-Z5qI6hfpaWU+CVBKHQG84VX049L/Nm0lcdbQC5hUV8w=";
+    sha256 = src-hash;
   };
 
   inherit (lib) optional optionals makeLibraryPath makeSearchPathOutput makeBinPath;
